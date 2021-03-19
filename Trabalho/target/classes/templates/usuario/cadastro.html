@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DomainCheap</title>
+    </head>
+    <body>
+        <section layout:fragment="corpo">
+            <div th:if="${msgSucesso} != null" class="alert alert-success" role="alert" style="text-align: center;">
+                <span th:text="${msgSucesso}"> </span>
+            </div>
+
+            <div class="centro">
+                <form id="formulario" th:action="@{/usuarios/salvar}" th:object="${usuario}" method="post"
+                enctype="multipart/form-data">
+                    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                        <ul>
+                            <li th:each="error : ${#fields.detailedErrors()}">
+                                <b th:text="${error.message}" style="color: red;"> </b>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <input type="hidden" th:field="${usuario.id}" />
+
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" th:field="${usuario.nome}" class="form-control" id="name" placeholder="Digite seu nome" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" th:field="${usuario.email}" class="form-control" id="email" placeholder="Digite seu email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" th:field="${usuario.senha}" class="form-control" id="password" placeholder="Digite sua senha" />
+                        <small id="passwordHelpBlock" class="form-text text-muted">Sua senha deve conter no mínimo 8 caracteres</small>
+                    </div>
+                    <label for="password">Sexo</label>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sexo" th:field="${usuario.sexo}" th:value="M" />
+                        <label class="form-check-label">Masculino</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sexo" th:field="${usuario.sexo}" th:value="F" />
+                        <label class="form-check-label">Feminino</label>
+                    </div>
+
+			
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control"/>
+                        <input type="hidden" th:field="${usuario.foto.id}" />
+                    </div>
+                    
+                 
+
+                    <div style="margin-top: 10px;">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" formaction="/" formmethod="get" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+    </body>
+</html>
